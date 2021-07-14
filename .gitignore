@@ -1,0 +1,3 @@
+build/*
+!build/premake5.lua
+!build/build.bat
