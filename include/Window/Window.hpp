@@ -8,11 +8,13 @@
 #include <Window/EventHandler.hpp>
 #include <Window/WindowHandle.hpp>
 
-#include <string>
-#include <queue>
+#include <Math/Vector2.hpp>
 
 #include <SDL2/SDL_video.h>
 #include <SDL2/SDL_events.h>
+
+#include <string>
+#include <queue>
 
 namespace Idk {
 
@@ -33,6 +35,8 @@ namespace Idk {
 
 		void processEvent() const;
 
+		Vector2ui size() const;
+
 		EventHandler& getEventHandler();
 		WindowHandle getHandle() const;
 
@@ -45,6 +49,7 @@ namespace Idk {
 		EventHandler m_eventHandler;
 		SDL_Window * m_handle;
 		bool m_closed;
+		Vector2ui m_size;
 	};
 
 }

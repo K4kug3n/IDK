@@ -33,6 +33,7 @@ namespace Idk {
 		Vector2& operator*=(T scale);
 
 		bool operator==(const Vector2& vec) const;
+		bool operator!=(const Vector2& vec) const;
 
 		std::string toString() const;
 

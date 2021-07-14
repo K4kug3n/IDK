@@ -116,6 +116,11 @@ namespace Idk{
 	}
 
 	template<typename T>
+	inline bool Vector4<T>::operator!=(const Vector4& vec) const {
+		return !(*this == vec);
+	}
+
+	template<typename T>
 	std::string Vector4<T>::toString() const {
 		std::stringstream stream;
 

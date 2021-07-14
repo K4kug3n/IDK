@@ -7,24 +7,12 @@
 #include <string>
 
 #include <Renderer/Instance.hpp>
-#include <Renderer/PhysicalDevice.hpp>
 
 #include <vulkan/vulkan.h>
 
-/*#if defined(VK_USE_PLATFORM_WIN32_KHR)
-	#include <Windows.h>
-#elif defined(VK_USE_PLATFORM_XCB_KHR)
-	#include <xcb/xcb.h>
-	#include <dlfcn.h>
-	#include <cstdlib>
-#elif defined(VK_USE_PLATFORM_XLIB_KHR)
-	#include <X11/Xlib.h>
-	#include <X11/Xutil.h>
-	#include <dlfcn.h>
-	#include <cstdlib>
-#endif*/
-
 namespace Idk {
+
+	class PhysicalDevice;
 
 	class Device {
 	public:
@@ -39,14 +27,25 @@ namespace Idk {
 		bool isLoadedExtension(std::string const& name) const;
 		bool isLoadedLayer(std::string const& name) const;
 
+		PhysicalDevice const& getPhysicalDevice() const;
+
+		void waitIdle() const;
+
 		#define IDK_DEVICE_FUNCTION(fun) PFN_##fun fun;
 		#include <Renderer/DeviceFunctions.inl>
 
+		VkDevice const& operator()() const;
+
 		Device& operator=(Device const&) = delete;
 		Device& operator=(Device&&) = delete;
+
 	private:
+		PFN_vkVoidFunction loadDeviceFunction(const char* name);
+
 		VkDevice m_device;
+		PhysicalDevice const* m_physicalDevice;
 		Instance const& m_instance;
+
 		std::unordered_set<std::string> m_extensions;
 		std::unordered_set<std::string> m_layers;
 	};
